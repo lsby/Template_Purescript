@@ -7,7 +7,21 @@
   "customizations": {
     "vscode": {
       "settings": {},
-      "extensions": []
+      "extensions": [
+        "CodeInChinese.EnglishChineseDictionary",
+        "esbenp.prettier-vscode",
+        "mhutchie.git-graph",
+        "mikestead.dotenv",
+        "ms-azuretools.vscode-docker",
+        "nicoespeon.abracadabra",
+        "nicoespeon.hocus-pocus",
+        "tombonnike.vscode-status-bar-format-toggle",
+        "vscode-icons-team.vscode-icons",
+        "hbybyyang.purescript-vscode-genjs",
+        "hbybyyang.vscode-purty-hby",
+        "nwolverson.ide-purescript",
+        "nwolverson.language-purescript"
+      ]
     }
   },
   "postCreateCommand": "npm i && spago build",

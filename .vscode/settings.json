@@ -1,0 +1,8 @@
+{
+    "purescript.exportsCodeLens": false,
+    "purescript.declarationTypeCodeLens": false,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
