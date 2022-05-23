@@ -39,7 +39,7 @@
     }
   },
   "staticFiles": {
-    "staticPath": ".static"
+    "staticPath": "static"
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",

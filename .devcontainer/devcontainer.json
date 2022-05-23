@@ -1,0 +1,15 @@
+{
+  "name": "Template_Purescript",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {}
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": []
+    }
+  },
+  "postCreateCommand": "npm i && spago build",
+  "remoteUser": "node"
+}
