@@ -78,11 +78,11 @@ main =
 
   setIPCEvent :: Task Unit
   setIPCEvent = do
-    on "testSync" onSync
-    on "testAsync" onAsync
+    on "testSync" testSync
+    on "testAsync" testAsync
 
-  onSync :: IpcMainEvent → Json → Task Unit
-  onSync e a = do
+  testSync :: IpcMainEvent → Json → Task Unit
+  testSync e a = do
     case A.decodeJson a of
       Left err -> do
         log $ show err
@@ -91,8 +91,8 @@ main =
         log $ show rx
         setReturnValue e $ A.encodeJson { msg: "testSync-toWeb" }
 
-  onAsync :: IpcMainEvent → Json → Task Unit
-  onAsync e a = do
+  testAsync :: IpcMainEvent → Json → Task Unit
+  testAsync e a = do
     case A.decodeJson a of
       Left err -> do
         log $ show err
