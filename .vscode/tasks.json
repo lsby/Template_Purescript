@@ -1,0 +1,50 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "watch:web",
+      "type": "npm",
+      "script": "watch:web",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "never"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "watch:ts",
+      "type": "npm",
+      "script": "watch:ts",
+      "problemMatcher": "$tsc-watch",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "never"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "watch:purs",
+      "type": "npm",
+      "script": "watch:purs",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "never"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "watch:all",
+      "dependsOn": ["watch:web", "watch:ts", "watch:purs"],
+      "problemMatcher": []
+    }
+  ]
+}
