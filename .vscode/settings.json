@@ -4,5 +4,8 @@
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "[purescript]": {
+        "editor.defaultFormatter": "nwolverson.ide-purescript"
+    },
+    "purescript.formatter": "purs-tidy",
 }
