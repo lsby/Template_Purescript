@@ -27,13 +27,16 @@ to generate this file without the comments in this block.
   , "hby-unsafe"
   , "integers"
   , "maybe"
+  , "newtype"
   , "node-path"
   , "node-process"
   , "numbers"
   , "prelude"
   , "react"
+  , "refs"
   , "tailrec"
   , "transformers"
+  , "tuples"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
