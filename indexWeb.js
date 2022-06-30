@@ -1,10 +1,5 @@
-import "rsuite/styles/index.less"
+import { createApp } from "vue"
+import App from "./src/Page/App.vue"
 
-require("./output/Web/index.js").main()
-
-if (module.hot) {
-  var ws = new WebSocket("ws://localhost:1234/")
-  ws.onmessage = function () {
-    window.location.href = window.location.href
-  }
-}
+var app = createApp(App)
+app.mount("#app")

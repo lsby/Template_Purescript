@@ -15,8 +15,6 @@ to generate this file without the comments in this block.
   [ "aff"
   , "argonaut"
   , "arrays"
-  , "concur-core"
-  , "concur-react"
   , "console"
   , "control"
   , "effect"
