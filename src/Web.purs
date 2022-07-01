@@ -1,60 +1,46 @@
-module Web where
+module Web (state, event) where
 
 import Prelude
 
-import Data.Foldable (intercalate)
-import Effect (Effect)
-import Effect.Console (log)
 import Hby.Task (Task)
 import Lib.Vue (VueReactive)
 import Lib.Vue as V
-import Node.Encoding (Encoding(..))
-import Node.FS.Sync (writeTextFile)
-import Node.Globals (__dirname)
-import Node.Path as Path
-import OhYes (generateTS)
-import Text.Prettier (defaultOptions, format)
 import Type.Proxy (Proxy(..))
 
 ----------------------
-generateTSType :: Effect Unit
-generateTSType = do
-  p <- (Path.resolve [ __dirname, "../../src/Page/" ] "types.ts")
-  writeTextFile UTF8 p values
-  where
-  values = format defaultOptions $ intercalate "\n"
-    [ generateTS "state" (Proxy :: Proxy State)
-    , generateTS "event" (Proxy :: Proxy Event)
-    ]
-
-----------------------
 type State =
-  { a :: Int
-  , b :: String
+  { n :: Int
+  , hello :: String
   }
 
-state :: VueReactive State
+state :: Task (VueReactive State)
 state = V.mk
-  { a: 1
-  , b: "abc"
+  { n: 0
+  , hello: "hello, world!"
   }
 
 ----------------------
-hello :: Effect Unit
-hello = log "hello, world."
-
-myAdd :: Int -> Int -> Int
-myAdd a b = a + b
+add1 :: Int -> Int
+add1 a = a + 1
 
 increase :: VueReactive State -> Task Unit
 increase ref = do
-  V.set (Proxy :: Proxy "a") 3 ref
+  V.over (Proxy :: Proxy "n") (add1) ref
 
+makeZero :: VueReactive State -> Task Unit
+makeZero ref = do
+  V.set (Proxy :: Proxy "n") 0 ref
+
+----------------------
 type Event =
   { increase :: Task Unit
+  , makeZero :: Task Unit
   }
 
-event :: VueReactive Event
-event = V.mk
-  { increase: increase state
-  }
+event :: Task (VueReactive Event)
+event = do
+  s <- state
+  V.mk
+    { increase: increase s
+    , makeZero: makeZero s
+    }
