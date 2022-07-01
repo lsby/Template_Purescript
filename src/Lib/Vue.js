@@ -10,7 +10,6 @@ exports.get = (key) => (_) => (_) => (obj) => () => {
   })
 }
 exports.set = (key) => (_) => (_) => (value) => (obj) => () => {
-  console.log(key.reflectSymbol(), value, obj)
   return new Promise((res, rej) => {
     obj[key.reflectSymbol()] = value
     res(null)
