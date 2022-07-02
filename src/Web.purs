@@ -17,6 +17,7 @@ n = 0
 hello :: String
 hello = "hello, world!"
 
+----------------------
 type State =
   { n :: Int
   , hello :: String
