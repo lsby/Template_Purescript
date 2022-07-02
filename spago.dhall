@@ -24,7 +24,6 @@ to generate this file without the comments in this block.
   , "hby-electron"
   , "hby-express"
   , "hby-task"
-  , "hby-unsafe"
   , "integers"
   , "maybe"
   , "newtype"
