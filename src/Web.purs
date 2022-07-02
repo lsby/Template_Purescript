@@ -1,8 +1,10 @@
-module Web (state, event) where
+module Web where
 
 import Prelude
+
 import Data.Argonaut as A
 import Data.Either (Either(..))
+import Data.Newtype (class Newtype, unwrap, wrap)
 import Hby.Electron.IPCRenderer (on, send, sendSync)
 import Hby.Task (Task)
 import Hby.Task as T
@@ -11,14 +13,19 @@ import Lib.Vue as V
 import Type.Proxy (Proxy(..))
 
 ----------------------
+newtype Counter = Counter Int
+
+derive instance Newtype Counter _
+----------------------
+
 type State =
-  { n :: Int
+  { n :: Counter
   , hello :: String
   }
 
 state :: Task (VueReactive State)
 state = V.mk
-  { n: 0
+  { n: Counter 0
   , hello: "hello, world!"
   }
 
@@ -48,11 +55,11 @@ add1 a = a + 1
 
 increase :: VueReactive State -> Task Unit
 increase ref = do
-  V.over (Proxy :: Proxy "n") (add1) ref
+  V.over (Proxy :: Proxy "n") (wrap <<< add1 <<< unwrap) ref
 
 makeZero :: VueReactive State -> Task Unit
 makeZero ref = do
-  V.set (Proxy :: Proxy "n") 0 ref
+  V.set (Proxy :: Proxy "n") (Counter 0) ref
 
 testElectronSync :: Task Unit
 testElectronSync = do
