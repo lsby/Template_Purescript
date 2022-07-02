@@ -5,18 +5,12 @@ exports.mk = (obj) => () => {
     res(r)
   })
 }
-exports.toRaw = (obj) => () => {
+exports.get = (key) => (_) => (_) => (obj) => () => {
   var { isProxy, toRaw } = require("vue")
   return new Promise((res, rej) => {
-    var _v = obj
+    var _v = obj[key.reflectSymbol()]
     var v = isProxy(_v) ? toRaw(_v) : _v
     res(v)
-  })
-}
-exports.get = (key) => (_) => (_) => (obj) => () => {
-  return new Promise((res, rej) => {
-    var r = obj[key.reflectSymbol()]
-    res(r)
   })
 }
 exports.set = (key) => (_) => (_) => (value) => (obj) => () => {

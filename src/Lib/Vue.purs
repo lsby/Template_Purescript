@@ -13,18 +13,13 @@ foreign import mk
    . Record obj
   -> Task (VueReactive (Record obj))
 
-foreign import toRaw
-  :: forall obj
-   . VueReactive (Record obj)
-  -> Task (Record obj)
-
 foreign import get
   :: forall key value tail obj
    . IsSymbol key
   => Cons key value tail obj
   => Proxy key
   -> VueReactive (Record obj)
-  -> Task (VueReactive (Record obj))
+  -> Task value
 
 foreign import set
   :: forall key value tail obj
