@@ -11,13 +11,6 @@ import Lib.Vue as V
 import Type.Proxy (Proxy(..))
 
 ----------------------
-n :: Int
-n = 0
-
-hello :: String
-hello = "hello, world!"
-
-----------------------
 type State =
   { n :: Int
   , hello :: String
@@ -25,8 +18,8 @@ type State =
 
 state :: Task (VueReactive State)
 state = V.mk
-  { n: n
-  , hello
+  { n: 0
+  , hello: "hello, world!"
   }
 
 ----------------------
