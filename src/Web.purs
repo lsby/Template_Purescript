@@ -4,20 +4,15 @@ import Prelude
 
 import Data.Argonaut as A
 import Data.Either (Either(..))
-import Data.Newtype (class Newtype, unwrap, wrap)
+import Data.Newtype (unwrap, wrap)
 import Hby.Electron.IPCRenderer (on, send, sendSync)
 import Hby.Task (Task)
 import Hby.Task as T
 import Lib.Vue (VueReactive)
 import Lib.Vue as V
-import Type.Proxy (Proxy(..))
+import Model.Counter (Counter(..))
 
 ----------------------
-newtype Counter = Counter Int
-
-derive instance Newtype Counter _
-----------------------
-
 type State =
   { n :: Counter
   , hello :: String
@@ -42,8 +37,8 @@ event :: Task (VueReactive Event)
 event = do
   s <- state
   V.mk
-    { increase: increase s
-    , makeZero: makeZero s
+    { increase: V.apply increase s
+    , makeZero: V.apply makeZero s
     , testElectronSync: testElectronSync
     , testElectronAsync_on: testElectronAsync_on
     , testElectronAsync_send: testElectronAsync_send
@@ -53,13 +48,11 @@ event = do
 add1 :: Int -> Int
 add1 a = a + 1
 
-increase :: VueReactive State -> Task Unit
-increase ref = do
-  V.over (Proxy :: Proxy "n") (wrap <<< add1 <<< unwrap) ref
+increase :: State -> State
+increase s = s { n = wrap (add1 (unwrap s.n)) }
 
-makeZero :: VueReactive State -> Task Unit
-makeZero ref = do
-  V.set (Proxy :: Proxy "n") (Counter 0) ref
+makeZero :: State -> State
+makeZero s = s { n = wrap 0 }
 
 testElectronSync :: Task Unit
 testElectronSync = do

@@ -38,3 +38,9 @@ foreign import over
   -> (value -> value)
   -> VueReactive (Record obj)
   -> Task Unit
+
+foreign import apply
+  :: forall obj
+   . (Record obj -> Record obj)
+  -> VueReactive (Record obj)
+  -> Task Unit
