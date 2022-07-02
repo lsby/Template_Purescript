@@ -7,6 +7,7 @@ import Data.Either (Either(..))
 import Hby.Electron.IPCRenderer (on, send, sendSync)
 import Hby.Task (Task)
 import Hby.Task as T
+import Lib.Lib as Lib
 import Lib.Vue (VueReactive)
 import Lib.Vue as V
 import Model.Counter (Counter(..))
@@ -39,39 +40,14 @@ event = do
   V.mk
     { increase: V.apply increase s
     , makeZero: V.apply makeZero s
-    , testElectronSync: testElectronSync
-    , testElectronAsync_on: testElectronAsync_on
-    , testElectronAsync_send: testElectronAsync_send
+    , testElectronSync: Lib.testElectronSync
+    , testElectronAsync_on: Lib.testElectronAsync_on
+    , testElectronAsync_send: Lib.testElectronAsync_send
     }
 
 ----------------------
-add1 :: Int -> Int
-add1 a = a + 1
-
 increase :: State -> State
 increase s = s { n = Counter.add 1 s.n }
 
 makeZero :: State -> State
 makeZero s = s { n = Counter 0 }
-
-testElectronSync :: Task Unit
-testElectronSync = do
-  r <- sendSync "testSync" $ A.encodeJson { msg: "testSync-toService" }
-  case A.decodeJson r of
-    Left err -> do
-      T.log $ show err
-    Right (rx :: { msg :: String }) -> do
-      T.log $ show rx
-
-testElectronAsync_on :: Task Unit
-testElectronAsync_on = on "testAsync-reply"
-  ( \_ a -> do
-      case A.decodeJson a of
-        Left err -> do
-          T.log $ show err
-        Right (rx :: { msg :: String }) -> do
-          T.log $ show rx
-  )
-
-testElectronAsync_send :: Task Unit
-testElectronAsync_send = send "testAsync" $ A.encodeJson { msg: "testAsync-toService" }
