@@ -12,13 +12,9 @@ to generate this file without the comments in this block.
 -}
 { name = "my-project"
 , dependencies =
-  [ "aff"
-  , "argonaut"
+  [ "argonaut"
   , "arrays"
-  , "concur-core"
-  , "concur-react"
   , "console"
-  , "control"
   , "effect"
   , "either"
   , "hby-electron"
@@ -31,11 +27,6 @@ to generate this file without the comments in this block.
   , "node-process"
   , "numbers"
   , "prelude"
-  , "react"
-  , "refs"
-  , "tailrec"
-  , "transformers"
-  , "tuples"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]

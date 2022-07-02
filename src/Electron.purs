@@ -1,6 +1,7 @@
 module Electron where
 
 import Prelude
+
 import Data.Argonaut (Json)
 import Data.Argonaut (encodeJson, decodeJson) as A
 import Data.Array (length)
@@ -14,8 +15,8 @@ import Hby.Electron.Data (BrowserWindowConf, IpcMainEvent)
 import Hby.Electron.IPCMain (on)
 import Hby.Electron.IpcMainEvent (reply, setReturnValue)
 import Hby.Electron.WebContents (openDevTools)
-import Hby.Task (Task, runTask_, log)
-import Hby.Unsafe (unsafeLog)
+import Hby.Task (Task, runTask_)
+import Hby.Task as T
 import Lib.Lib (initEnv)
 import Node.Globals (__dirname)
 import Node.Path (resolve)
@@ -54,10 +55,10 @@ main =
     pure unit
     case env of
       Just "development" -> do
-        log "开发模式启动"
+        T.log "开发模式启动"
         loadURL bw "http://localhost:1234"
       _ -> do
-        log "生产模式启动"
+        T.log "生产模式启动"
         p <- liftEffect $ resolve [ __dirname ] "../../dist/index.html"
         loadFile bw p
     openDevTools wc
@@ -85,18 +86,16 @@ main =
   testSync e a = do
     case A.decodeJson a of
       Left err -> do
-        log $ show err
-        unsafeLog a
+        T.log $ show err
       Right (rx :: { msg :: String }) -> do
-        log $ show rx
+        T.log $ show rx
         setReturnValue e $ A.encodeJson { msg: "testSync-toWeb" }
 
   testAsync :: IpcMainEvent → Json → Task Unit
   testAsync e a = do
     case A.decodeJson a of
       Left err -> do
-        log $ show err
-        unsafeLog a
+        T.log $ show err
       Right (rx :: { msg :: String }) -> do
-        log $ show rx
+        T.log $ show rx
         reply e "testAsync-reply" $ A.encodeJson { msg: "testSync-toWeb" }

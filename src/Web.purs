@@ -1,32 +1,78 @@
-module Web where
+module Web (state, event) where
 
 import Prelude
-import Component.Clock as Clock
-import Component.Counter2 as Counter2
-import Component.FFI.Button as FFI
-import Component.Hello as Hello
-import Component.Loop as Loop
-import Component.Signal as Signal
-import Component.State as State
-import Concur.React.DOM as D
-import Concur.React.Run (runWidgetInDom)
-import Effect (Effect)
 
-main :: Effect Unit
-main =
-  runWidgetInDom "app"
-    $ D.div'
-        [ D.div' [ Hello.main ]
-        , D.div' [ D.text "=======" ]
-        , D.div' [ Clock.main 0 ]
-        , D.div' [ D.text "=======" ]
-        , D.div' [ Signal.main ]
-        , D.div' [ D.text "=======" ]
-        , D.div' [ Counter2.main ]
-        , D.div' [ D.text "=======" ]
-        , D.div' [ Loop.main 0 ]
-        , D.div' [ D.text "=======" ]
-        , D.div' [ State.main { a: 0, b: 0 } ]
-        , D.div' [ D.text "=======" ]
-        , D.div' [ FFI.button [] [ D.text "组件按钮" ] ]
-        ]
+import Data.Argonaut as A
+import Data.Either (Either(..))
+import Hby.Electron.IPCRenderer (on, send, sendSync)
+import Hby.Task (Task)
+import Hby.Task as T
+import Lib.Vue (VueReactive)
+import Lib.Vue as V
+import Type.Proxy (Proxy(..))
+
+----------------------
+type State =
+  { n :: Int
+  , hello :: String
+  }
+
+state :: Task (VueReactive State)
+state = V.mk
+  { n: 0
+  , hello: "hello, world!"
+  }
+
+----------------------
+add1 :: Int -> Int
+add1 a = a + 1
+
+increase :: VueReactive State -> Task Unit
+increase ref = do
+  V.over (Proxy :: Proxy "n") (add1) ref
+
+makeZero :: VueReactive State -> Task Unit
+makeZero ref = do
+  V.set (Proxy :: Proxy "n") 0 ref
+
+testElectronSync :: Task Unit
+testElectronSync = do
+  r <- sendSync "testSync" $ A.encodeJson { msg: "testSync-toService" }
+  case A.decodeJson r of
+    Left err -> do
+      T.log $ show err
+    Right (rx :: { msg :: String }) -> do
+      T.log $ show rx
+
+testElectronAsync_on :: Task Unit
+testElectronAsync_on = on "testAsync-reply"
+  ( \_ a -> do
+      case A.decodeJson a of
+        Left err -> do
+          T.log $ show err
+        Right (rx :: { msg :: String }) -> do
+          T.log $ show rx
+  )
+
+testElectronAsync_send :: Task Unit
+testElectronAsync_send = send "testAsync" $ A.encodeJson { msg: "testAsync-toService" }
+
+----------------------
+type Event =
+  { increase :: Task Unit
+  , makeZero :: Task Unit
+  , testElectronSync :: Task Unit
+  , testElectronAsync_on :: Task Unit
+  , testElectronAsync_send :: Task Unit
+  }
+
+event :: Task (VueReactive Event)
+event = do
+  s <- state
+  V.mk
+    { increase: increase s
+    , makeZero: makeZero s
+    , testElectronSync: testElectronSync
+    , testElectronAsync_on: testElectronAsync_on
+    , testElectronAsync_send: testElectronAsync_send
+    }
