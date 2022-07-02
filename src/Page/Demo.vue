@@ -1,5 +1,5 @@
 <template>
-  <div>{{ state.hello }}!</div>
+  <div>{{ state.hello }}</div>
   <div>{{ state.n }}</div>
   <button @click="event.increase()">增加</button>
   <button @click="event.makeZero()">归零</button>
