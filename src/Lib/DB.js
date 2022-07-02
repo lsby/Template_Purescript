@@ -31,7 +31,6 @@ function getDB() {
     });
     return db;
 }
-// get_xs_by_id :: Int => Task { "姓名" :: String }
 exports.get_xs_by_id = (id) => () => {
     return f();
     function f() {

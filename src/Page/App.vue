@@ -12,8 +12,8 @@ export default {
   },
   setup() {
     var { proxy } = getCurrentInstance() as any
-    var { state, event } = proxy
-    return { state, event }
+    var { state: s, event: e } = proxy
+    return { s, e }
   },
 }
 </script>

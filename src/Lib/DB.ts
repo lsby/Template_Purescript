@@ -28,7 +28,6 @@ function getDB() {
   return db
 }
 
-// get_xs_by_id :: Int => Task { "姓名" :: String }
 exports.get_xs_by_id = (id: number) => () => {
   return f()
   async function f() {

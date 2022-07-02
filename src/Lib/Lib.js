@@ -1,4 +1,3 @@
-// initEnv :: Task Unit
 exports.initEnv = () => {
   var dotenv = require("dotenv")
   var path = require("path")
@@ -19,14 +18,8 @@ exports.initEnv = () => {
     } else {
       throw "没有指定运行环境"
     }
-
-    if (process.env["NODE_ENV"] != "development") {
-      console.log("环境变量:", process.env)
-    }
   }
 }
-
-// testFun :: Task Unit
 exports.testFun = () => {
   return f()
   async function f() {
