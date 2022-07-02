@@ -4,13 +4,13 @@ import Prelude
 
 import Data.Argonaut as A
 import Data.Either (Either(..))
-import Data.Newtype (unwrap, wrap)
 import Hby.Electron.IPCRenderer (on, send, sendSync)
 import Hby.Task (Task)
 import Hby.Task as T
 import Lib.Vue (VueReactive)
 import Lib.Vue as V
 import Model.Counter (Counter(..))
+import Model.Counter as Counter
 
 ----------------------
 type State =
@@ -49,10 +49,10 @@ add1 :: Int -> Int
 add1 a = a + 1
 
 increase :: State -> State
-increase s = s { n = wrap (add1 (unwrap s.n)) }
+increase s = s { n = Counter.add 1 s.n }
 
 makeZero :: State -> State
-makeZero s = s { n = wrap 0 }
+makeZero s = s { n = Counter 0 }
 
 testElectronSync :: Task Unit
 testElectronSync = do
