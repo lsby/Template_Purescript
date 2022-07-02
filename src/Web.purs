@@ -2,11 +2,7 @@ module Web where
 
 import Prelude
 
-import Data.Argonaut as A
-import Data.Either (Either(..))
-import Hby.Electron.IPCRenderer (on, send, sendSync)
 import Hby.Task (Task)
-import Hby.Task as T
 import Lib.Lib as Lib
 import Lib.Vue (VueReactive)
 import Lib.Vue as V
