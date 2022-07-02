@@ -82,20 +82,21 @@ main =
     on "testSync" testSync
     on "testAsync" testAsync
 
-  testSync :: IpcMainEvent → Json → Task Unit
-  testSync e a = do
-    case A.decodeJson a of
-      Left err -> do
-        T.log $ show err
-      Right (rx :: { msg :: String }) -> do
-        T.log $ show rx
-        setReturnValue e $ A.encodeJson { msg: "testSync-toWeb" }
+----------------------
+testSync :: IpcMainEvent → Json → Task Unit
+testSync e a = do
+  case A.decodeJson a of
+    Left err -> do
+      T.log $ show err
+    Right (rx :: { msg :: String }) -> do
+      T.log $ show rx
+      setReturnValue e $ A.encodeJson { msg: "testSync-toWeb" }
 
-  testAsync :: IpcMainEvent → Json → Task Unit
-  testAsync e a = do
-    case A.decodeJson a of
-      Left err -> do
-        T.log $ show err
-      Right (rx :: { msg :: String }) -> do
-        T.log $ show rx
-        reply e "testAsync-reply" $ A.encodeJson { msg: "testSync-toWeb" }
+testAsync :: IpcMainEvent → Json → Task Unit
+testAsync e a = do
+  case A.decodeJson a of
+    Left err -> do
+      T.log $ show err
+    Right (rx :: { msg :: String }) -> do
+      T.log $ show rx
+      reply e "testAsync-reply" $ A.encodeJson { msg: "testSync-toWeb" }
