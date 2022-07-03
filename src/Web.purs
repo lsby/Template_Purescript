@@ -3,7 +3,7 @@ module Web where
 import Prelude
 
 import Hby.Task (Task)
-import Lib.Lib as Lib
+import Lib.LibWeb as LibWeb
 import Lib.Vue (VueReactive)
 import Lib.Vue as V
 import Model.Counter (Counter(..))
@@ -36,9 +36,9 @@ event = do
   V.mk
     { increase: V.apply increase s
     , makeZero: V.apply makeZero s
-    , testElectronSync: Lib.testElectronSync
-    , testElectronAsync_on: Lib.testElectronAsync_on
-    , testElectronAsync_send: Lib.testElectronAsync_send
+    , testElectronSync: LibWeb.testElectronSync
+    , testElectronAsync_on: LibWeb.testElectronAsync_on
+    , testElectronAsync_send: LibWeb.testElectronAsync_send
     }
 
 ----------------------
