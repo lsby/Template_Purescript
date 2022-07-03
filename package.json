@@ -68,7 +68,7 @@
     "@types/ramda": "^0.28.8",
     "@types/readline-sync": "^1.4.4",
     "cross-env": "^7.0.3",
-    "electron": "^17.1.0",
+    "electron": "^17.2.0",
     "electron-builder": "^22.14.13",
     "knex": "^1.0.5",
     "nodemon": "^2.0.15",
