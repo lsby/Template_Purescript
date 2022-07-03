@@ -19,7 +19,8 @@
         "vscode-icons-team.vscode-icons",
         "hbybyyang.purescript-vscode-genjs",
         "nwolverson.ide-purescript",
-        "nwolverson.language-purescript"
+        "nwolverson.language-purescript",
+        "Vue.volar"
       ]
     }
   },

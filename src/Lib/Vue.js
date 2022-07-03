@@ -38,11 +38,11 @@ exports.apply = (f) => (obj) => () => {
       obj_clone[name] = v
     }
 
-    var f_obj = f(obj_clone)
-    for (var name in obj) {
-      obj[name] = f_obj[name]
-    }
-
-    res(null)
+    f(obj_clone)().then((f_obj) => {
+      for (var name in obj) {
+        obj[name] = f_obj[name]
+      }
+      res(null)
+    })
   })
 }

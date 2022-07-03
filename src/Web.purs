@@ -42,8 +42,8 @@ event = do
     }
 
 ----------------------
-increase :: State -> State
-increase s = s { n = Counter.add 1 s.n }
+increase :: State -> Task State
+increase s = pure $ s { n = Counter.add 1 s.n }
 
-makeZero :: State -> State
-makeZero s = s { n = Counter 0 }
+makeZero :: State -> Task State
+makeZero s = pure $ s { n = Counter 0 }
