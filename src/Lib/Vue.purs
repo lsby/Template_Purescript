@@ -41,6 +41,6 @@ foreign import over
 
 foreign import apply
   :: forall obj
-   . (Record obj -> Record obj)
+   . (Record obj -> Task (Record obj))
   -> VueReactive (Record obj)
   -> Task Unit
