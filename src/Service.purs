@@ -1,6 +1,7 @@
 module Service where
 
 import Prelude
+
 import Data.Argonaut (encodeJson, decodeJson) as A
 import Data.Either (Either(..))
 import Data.Int (fromNumber)

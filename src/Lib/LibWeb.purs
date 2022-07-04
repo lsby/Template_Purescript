@@ -1,6 +1,7 @@
 module Lib.LibWeb where
 
 import Prelude
+
 import Data.Argonaut as A
 import Data.Either (Either(..))
 import Hby.Electron.IPCRenderer (on, send, sendSync)
