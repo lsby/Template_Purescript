@@ -17,6 +17,7 @@ to generate this file without the comments in this block.
   , "console"
   , "effect"
   , "either"
+  , "has-js-rep"
   , "hby-electron"
   , "hby-express"
   , "hby-task"
@@ -26,6 +27,7 @@ to generate this file without the comments in this block.
   , "node-path"
   , "node-process"
   , "numbers"
+  , "ohyes"
   , "prelude"
   ]
 , packages = ./packages.dhall

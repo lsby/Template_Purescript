@@ -12,11 +12,13 @@
 
 <script lang="ts">
 import { getCurrentInstance } from "vue"
+import { State, Event } from "./Types"
 
 export default {
   setup() {
     var { proxy } = getCurrentInstance() as any
-    var { state: s, event: e } = proxy
+    var s = proxy.state as State
+    var e = proxy.event as Event
     return { s, e }
   },
 }

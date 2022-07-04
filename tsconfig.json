@@ -1,5 +1,6 @@
 {
   "include": ["src/**/*", "tools/**/*"],
+  "exclude": ["src/Page/*"],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 

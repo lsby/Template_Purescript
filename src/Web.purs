@@ -2,12 +2,32 @@ module Web where
 
 import Prelude
 
+import Data.Foldable (intercalate)
+import Effect (Effect)
 import Hby.Task (Task)
 import Lib.LibWeb as LibWeb
 import Lib.Vue (VueReactive)
 import Lib.Vue as V
 import Model.Counter (Counter(..))
 import Model.Counter as Counter
+import Node.Encoding (Encoding(..))
+import Node.FS.Sync (writeTextFile)
+import Node.Globals (__dirname)
+import Node.Path as PATH
+import OhYes (generateTS)
+import Text.Prettier (defaultOptions, format)
+import Type.Proxy (Proxy(..))
+
+----------------------
+genTypes :: Effect Unit
+genTypes = do
+  p <- PATH.resolve [ __dirname ] "../../src/Page/Types.ts"
+  writeTextFile UTF8 p values
+  where
+  values = format defaultOptions $ intercalate "\n"
+    [ generateTS "State" (Proxy :: Proxy State)
+    , generateTS "Event" (Proxy :: Proxy Event)
+    ]
 
 ----------------------
 type State =

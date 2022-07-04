@@ -42,8 +42,21 @@
       }
     },
     {
+      "label": "watch:genTypes",
+      "type": "npm",
+      "script": "watch:genTypes",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "never"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
       "label": "watch:all",
-      "dependsOn": ["watch:web", "watch:ts", "watch:purs"],
+      "dependsOn": ["watch:web", "watch:ts", "watch:purs", "watch:genTypes"],
       "problemMatcher": []
     }
   ]
