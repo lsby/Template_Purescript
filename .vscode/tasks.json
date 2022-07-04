@@ -5,6 +5,21 @@
       "label": "watch:web",
       "type": "npm",
       "script": "watch:web",
+      "problemMatcher": [
+        {
+          "pattern": {
+            "kind": "file",
+            "regexp": "(🚨 Build failed.)",
+            "file": 1,
+            "message": 1
+          },
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "^Server running at .*$",
+            "endsPattern": "^✨ Built in .*$|.*\\..*:.*:.*$"
+          }
+        }
+      ],
       "isBackground": true,
       "presentation": {
         "reveal": "never"
@@ -32,6 +47,21 @@
       "label": "watch:purs",
       "type": "npm",
       "script": "watch:purs",
+      "problemMatcher": [
+        {
+          "pattern": {
+            "kind": "file",
+            "regexp": "^(Error found:.*)$",
+            "file": 1,
+            "message": 1
+          },
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "\\[info\\] File changed, triggered a build: .*$",
+            "endsPattern": "^\\[info\\] Type help for available commands. Press enter to force a rebuild.$"
+          }
+        }
+      ],
       "isBackground": true,
       "presentation": {
         "reveal": "never"
@@ -45,6 +75,21 @@
       "label": "watch:genTypes",
       "type": "npm",
       "script": "watch:genTypes",
+      "problemMatcher": [
+        {
+          "pattern": {
+            "kind": "file",
+            "regexp": "(^error:.*$)",
+            "file": 1,
+            "message": 1
+          },
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "^start$",
+            "endsPattern": "^end$"
+          }
+        }
+      ],
       "isBackground": true,
       "presentation": {
         "reveal": "never"

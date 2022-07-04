@@ -18,7 +18,7 @@
     "build:purs": "spago build",
     "build:genTypes": "node ./genTypes.js",
     "=====watch=====": "",
-    "watch:web": "rm -rf .parcel-cache dist && parcel ./index.html",
+    "watch:web": "rm -rf .parcel-cache dist && parcel --watch-for-stdin ./index.html",
     "watch:ts": "tsc -w",
     "watch:purs": "spago build -w",
     "watch:genTypes": "onchange -i output/**/* -- npm run build:genTypes",
