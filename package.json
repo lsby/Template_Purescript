@@ -21,7 +21,7 @@
     "watch:web": "rm -rf .parcel-cache dist && parcel --watch-for-stdin ./index.html",
     "watch:ts": "tsc -w",
     "watch:purs": "spago build -w",
-    "watch:genTypes": "onchange -i output/**/* -- npm run build:genTypes",
+    "watch:genTypes": "onchange -i src/**/*.purs -- npm run build:genTypes",
     "=====db=====": "",
     "db:push": "cross-env NODE_ENV=development node tools/db/db_push.js && npm run db:pull",
     "db:pull": "cross-env NODE_ENV=development node tools/db/db_pull.js",
