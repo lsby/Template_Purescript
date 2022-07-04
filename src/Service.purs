@@ -11,7 +11,7 @@ import Effect (Effect)
 import Effect.Class (liftEffect)
 import Hby.Express.Express (appB, listen, middle_cookieParser, middle_json, middle_urlencoded, mkApp, useMiddle, useRoute, useStatic, Route, mkRoute, routeB, setPost, Req, Res, getBody, send)
 import Hby.Task (Task, log, runTask_, throw)
-import Lib.LibService as LibService
+import Lib.LibService as LibS
 import Node.Globals (__dirname)
 import Node.Path (resolve)
 import Node.Process (lookupEnv)
@@ -19,7 +19,7 @@ import Node.Process (lookupEnv)
 main :: Effect Unit
 main =
   runTask_ do
-    LibService.initEnv
+    LibS.initEnv
     staticPath <- liftEffect $ resolve [ __dirname ] "../../dist"
     apiRoute <- api
     app <-

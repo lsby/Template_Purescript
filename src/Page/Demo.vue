@@ -8,6 +8,15 @@
     测试electron异步事件_打开监听
   </button>
   <button @click="e.testElectronAsync_send()">测试electron异步事件_发送</button>
+  <div>
+    <label>请输入</label
+    ><input
+      type="text"
+      @input="(a) => e.inputTodo(a.target.value)()"
+      :value="s.inputTodo"
+    /><button @click="e.addTodo">添加</button>
+    <li v-for="item in s.toDoList">{{ item }}</li>
+  </div>
 </template>
 
 <script lang="ts">
