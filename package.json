@@ -29,7 +29,8 @@
     "db:empty": "cross-env NODE_ENV=development node tools/db/db_empty.js",
     "db:reset": "cross-env NODE_ENV=development node tools/db/db_mk.js && npm run db:empty && npm run db:push && npm run db:pull && npm run db:init",
     "=====其他=====": "",
-    "pack": "npm run build && electron-builder"
+    "pack": "npm run build && electron-builder",
+    "format:all": "prettier --write ."
   },
   "build": {
     "appId": "ql.purs",

@@ -1,0 +1,7 @@
+/.spago
+/.parcel-cache
+/output
+/src/Page/Types.ts
+/dist
+/tools/db/*.js
+/tools/types/Database.ts

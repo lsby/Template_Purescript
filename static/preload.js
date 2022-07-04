@@ -1,5 +1,5 @@
-var { ipcRenderer } = require("electron");
+var { ipcRenderer } = require("electron")
 
 window.addEventListener("DOMContentLoaded", () => {
-  window.ipcRenderer = ipcRenderer;
-});
+  window.ipcRenderer = ipcRenderer
+})

@@ -20,7 +20,8 @@
         "hbybyyang.purescript-vscode-genjs",
         "nwolverson.ide-purescript",
         "nwolverson.language-purescript",
-        "Vue.volar"
+        "Vue.volar",
+        "octref.vetur"
       ]
     }
   },
