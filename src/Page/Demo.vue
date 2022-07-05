@@ -28,7 +28,7 @@ export default {
     var { proxy } = getCurrentInstance() as any
     var s = proxy.state as WebState
     var e = proxy.event as WebEvent
-    return { s, e }
+    return { s, e, w: window }
   },
 }
 </script>
