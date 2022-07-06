@@ -2,41 +2,42 @@ module Web where
 
 import Prelude
 
-import Data.Array as Array
-import Hby.Task (Task)
-import Lib.Vue (VueReactive)
-import Lib.Vue as V
-import Model.Counter (Counter(..))
-import Model.Counter as Counter
 import Data.Argonaut as A
 import Data.Either (Either(..))
 import Hby.Electron.IPCRenderer (on, send, sendSync)
+import Hby.Task (Task)
 import Hby.Task as T
+import Lib.Vue (VueReactive)
+import Lib.Vue as V
+import Model.Counter (Counter, addCounter, emptyCounter)
+import Model.ToDoList (ToDoItem, ToDoList, addToDoItem, emptyToDoItem, emptyToDoList)
 
 ----------------------
+-- | 前端状态
 type State =
   { n :: Counter
   , hello :: String
-  , inputTodo :: String
-  , toDoList :: Array String
+  , inputTodo :: ToDoItem
+  , toDoList :: ToDoList
   }
 
 state :: Task (VueReactive State)
 state = V.mk
-  { n: Counter 0
+  { n: emptyCounter
   , hello: "hello, world!"
-  , inputTodo: ""
-  , toDoList: []
+  , inputTodo: emptyToDoItem
+  , toDoList: emptyToDoList
   }
 
 ----------------------
+-- | 前端事件
 type Event =
   { onClick_Increase :: Task Unit
   , onClick_MakeZero :: Task Unit
   , onClick_SyncSendTest :: Task Unit
   , onClick_AsyncListener :: Task Unit
   , onClick_AsyncSendTest :: Task Unit
-  , onInput_Todo :: String -> Task Unit
+  , onInput_Todo :: ToDoItem -> Task Unit
   , onClick_AddTodo :: Task Unit
   }
 
@@ -56,19 +57,19 @@ event = do
 ----------------------
 -- | 当点击添加待办项
 onClick_AddTodo :: State -> Task State
-onClick_AddTodo s = pure $ s { toDoList = Array.cons s.inputTodo s.toDoList, inputTodo = "" }
+onClick_AddTodo s = pure $ s { toDoList = addToDoItem s.inputTodo s.toDoList, inputTodo = emptyToDoItem }
 
 -- | 当输入待办项
-onInput_Todo :: String -> State -> Task State
+onInput_Todo :: ToDoItem -> State -> Task State
 onInput_Todo str s = pure $ s { inputTodo = str }
 
 -- | 当点击增加按钮
 onClick_Increase :: State -> Task State
-onClick_Increase s = pure $ s { n = Counter.add 1 s.n }
+onClick_Increase s = pure $ s { n = addCounter 1 s.n }
 
 -- | 当点击归零按钮
 onClick_MakeZero :: State -> Task State
-onClick_MakeZero s = pure $ s { n = Counter 0 }
+onClick_MakeZero s = pure $ s { n = emptyCounter }
 
 -- | 当点击同步测试按钮
 onClick_SyncSendTest :: Task Unit

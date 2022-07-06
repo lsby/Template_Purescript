@@ -1,9 +1,6 @@
 {
   "purescript.exportsCodeLens": false,
   "purescript.declarationTypeCodeLens": false,
-  "editor.formatOnPaste": true,
-  "editor.formatOnSave": true,
-  "editor.formatOnType": true,
   "[purescript]": {
     "editor.defaultFormatter": "nwolverson.ide-purescript"
   },

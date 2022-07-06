@@ -28,7 +28,7 @@ function getDB() {
   return db
 }
 
-exports.getNameById = (id: number) => () => {
+exports._getNameById = (Just: any) => (Nothing: any) => (id: number) => () => {
   return f()
   async function f() {
     var db = getDB()
@@ -41,6 +41,7 @@ exports.getNameById = (id: number) => () => {
 
     await db.destroy()
 
-    return r
+    if (r.length == 0) return Nothing
+    return Just(r[0]!["姓名"])
   }
 }

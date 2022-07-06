@@ -63,7 +63,7 @@ function getDB() {
   })
   return db
 }
-exports.getNameById = (id) => () => {
+exports._getNameById = (Just) => (Nothing) => (id) => () => {
   return f()
   function f() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -74,7 +74,8 @@ exports.getNameById = (id) => () => {
         .where("学生表.id", "=", id)
         .execute()
       yield db.destroy()
-      return r
+      if (r.length == 0) return Nothing
+      return Just(r[0]["姓名"])
     })
   }
 }

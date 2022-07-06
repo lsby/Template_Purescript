@@ -1,8 +1,8 @@
 export type WebState = {
   hello: string,
-  inputTodo: string,
-  n: number,
-  toDoList: string[]
+  inputTodo: "PureType_ToDoItem",
+  n: "PureType_Counter",
+  toDoList: Array<"PureType_ToDoItem">
 };
 export type WebEvent = {
   onClick_AddTodo: () => Promise<void>,
@@ -11,5 +11,5 @@ export type WebEvent = {
   onClick_Increase: () => Promise<void>,
   onClick_MakeZero: () => Promise<void>,
   onClick_SyncSendTest: () => Promise<void>,
-  onInput_Todo: (a: string) => () => Promise<void>
+  onInput_Todo: (a: "PureType_ToDoItem") => () => Promise<void>
 };

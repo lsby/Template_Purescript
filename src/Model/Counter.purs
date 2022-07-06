@@ -1,8 +1,12 @@
-module Model.Counter where
+module Model.Counter
+  ( Counter
+  , addCounter
+  , emptyCounter
+  ) where
 
+----------------------
 import Prelude
 
-import Data.Newtype (class Newtype)
 import HasJSRep (class HasJSRep)
 import OhYes (class HasTSRep)
 
@@ -10,13 +14,15 @@ import OhYes (class HasTSRep)
 -- | 计数器
 newtype Counter = Counter Int
 
-derive instance Newtype Counter _
-
 instance HasJSRep Counter
 instance HasTSRep Counter where
-  toTSRep _ = "number"
+  toTSRep _ = "'PureType_Counter'"
 
 ----------------------
+-- | 空计数器
+emptyCounter :: Counter
+emptyCounter = Counter 0
+
 -- | 增加计数器
-add :: Int -> Counter -> Counter
-add s (Counter n) = Counter $ n + s
+addCounter :: Int -> Counter -> Counter
+addCounter s (Counter n) = Counter $ n + s
