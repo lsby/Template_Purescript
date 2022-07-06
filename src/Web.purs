@@ -28,37 +28,41 @@ state = V.mk
 
 ----------------------
 type Event =
-  { increase :: Task Unit
-  , makeZero :: Task Unit
-  , testElectronSync :: Task Unit
-  , testElectronAsync_on :: Task Unit
-  , testElectronAsync_send :: Task Unit
-  , inputTodo :: String -> Task Unit
-  , addTodo :: Task Unit
+  { onClick_Increase :: Task Unit
+  , onClick_MakeZero :: Task Unit
+  , onClick_SyncSendTest :: Task Unit
+  , onClick_AsyncListener :: Task Unit
+  , onClick_AsyncSendTest :: Task Unit
+  , onInput_Todo :: String -> Task Unit
+  , onClick_AddTodo :: Task Unit
   }
 
 event :: Task (VueReactive Event)
 event = do
   s <- state
   V.mk
-    { increase: V.apply increase s
-    , makeZero: V.apply makeZero s
-    , testElectronSync: LibW.testElectronSync
-    , testElectronAsync_on: LibW.testElectronAsync_on
-    , testElectronAsync_send: LibW.testElectronAsync_send
-    , inputTodo: \str -> V.apply (inputTodo str) s
-    , addTodo: V.apply addTodo s
+    { onClick_Increase: V.apply onClick_Increase s
+    , onClick_MakeZero: V.apply onClick_MakeZero s
+    , onClick_SyncSendTest: LibW.onClick_SyncSendTest
+    , onClick_AsyncListener: LibW.onClick_AsyncListener
+    , onClick_AsyncSendTest: LibW.onClick_AsyncSendTest
+    , onInput_Todo: \str -> V.apply (onInput_Todo str) s
+    , onClick_AddTodo: V.apply onClick_AddTodo s
     }
 
 ----------------------
-addTodo :: State -> Task State
-addTodo s = pure $ s { toDoList = Array.cons s.inputTodo s.toDoList, inputTodo = "" }
+-- | 当点击添加待办项
+onClick_AddTodo :: State -> Task State
+onClick_AddTodo s = pure $ s { toDoList = Array.cons s.inputTodo s.toDoList, inputTodo = "" }
 
-inputTodo :: String -> State -> Task State
-inputTodo str s = pure $ s { inputTodo = str }
+-- | 当输入待办项
+onInput_Todo :: String -> State -> Task State
+onInput_Todo str s = pure $ s { inputTodo = str }
 
-increase :: State -> Task State
-increase s = pure $ s { n = Counter.add 1 s.n }
+-- | 当点击增加按钮
+onClick_Increase :: State -> Task State
+onClick_Increase s = pure $ s { n = Counter.add 1 s.n }
 
-makeZero :: State -> Task State
-makeZero s = pure $ s { n = Counter 0 }
+-- | 当点击归零按钮
+onClick_MakeZero :: State -> Task State
+onClick_MakeZero s = pure $ s { n = Counter 0 }

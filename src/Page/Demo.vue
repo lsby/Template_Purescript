@@ -1,20 +1,20 @@
 <template>
   <div>{{ s.hello }}</div>
   <div>{{ s.n }}</div>
-  <button @click="e.increase()">增加</button>
-  <button @click="e.makeZero()">归零</button>
-  <button @click="e.testElectronSync()">测试electron同步事件</button>
-  <button @click="e.testElectronAsync_on()">
+  <button @click="e.onClick_Increase()">增加</button>
+  <button @click="e.onClick_MakeZero()">归零</button>
+  <button @click="e.onClick_SyncSendTest()">测试electron同步事件</button>
+  <button @click="e.onClick_AsyncListener()">
     测试electron异步事件_打开监听
   </button>
-  <button @click="e.testElectronAsync_send()">测试electron异步事件_发送</button>
+  <button @click="e.onClick_AsyncSendTest()">测试electron异步事件_发送</button>
   <div>
     <label>请输入</label
     ><input
       type="text"
-      @input="(a) => e.inputTodo(a.target.value)()"
+      @input="(a) => e.onInput_Todo(a.target.value)()"
       :value="s.inputTodo"
-    /><button @click="e.addTodo()">添加</button>
+    /><button @click="e.onClick_AddTodo()">添加</button>
     <li v-for="(item, index) in s.toDoList" :key="index">{{ item }}</li>
   </div>
 </template>

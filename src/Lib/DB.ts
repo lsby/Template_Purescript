@@ -28,7 +28,7 @@ function getDB() {
   return db
 }
 
-exports.get_xs_by_id = (id: number) => () => {
+exports.getNameById = (id: number) => () => {
   return f()
   async function f() {
     var db = getDB()

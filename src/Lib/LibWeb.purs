@@ -9,11 +9,13 @@ import Hby.Task (Task)
 import Hby.Task as T
 
 ----------------------
+-- | 测试函数
 foreign import testFun :: Task Unit
 
 ----------------------
-testElectronSync :: Task Unit
-testElectronSync = do
+-- | 当点击同步测试按钮
+onClick_SyncSendTest :: Task Unit
+onClick_SyncSendTest = do
   r <- sendSync "testSync" $ A.encodeJson { msg: "testSync-toService" }
   case A.decodeJson r of
     Left err -> do
@@ -21,8 +23,9 @@ testElectronSync = do
     Right (rx :: { msg :: String }) -> do
       T.log $ show rx
 
-testElectronAsync_on :: Task Unit
-testElectronAsync_on = on "testAsync-reply"
+-- | 当点击异步监听按钮
+onClick_AsyncListener :: Task Unit
+onClick_AsyncListener = on "testAsync-reply"
   ( \_ a -> do
       case A.decodeJson a of
         Left err -> do
@@ -31,5 +34,6 @@ testElectronAsync_on = on "testAsync-reply"
           T.log $ show rx
   )
 
-testElectronAsync_send :: Task Unit
-testElectronAsync_send = send "testAsync" $ A.encodeJson { msg: "testAsync-toService" }
+-- | 当点击异步测试按钮
+onClick_AsyncSendTest :: Task Unit
+onClick_AsyncSendTest = send "testAsync" $ A.encodeJson { msg: "testAsync-toService" }
