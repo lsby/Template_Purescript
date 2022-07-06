@@ -14,7 +14,7 @@
       type="text"
       @input="(a) => e.inputTodo(a.target.value)()"
       :value="s.inputTodo"
-    /><button @click="e.addTodo">添加</button>
+    /><button @click="e.addTodo()">添加</button>
     <li v-for="item in s.toDoList">{{ item }}</li>
   </div>
 </template>
