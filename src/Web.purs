@@ -49,7 +49,7 @@ event = do
     , onClick_SyncSendTest: onClick_SyncSendTest
     , onClick_AsyncListener: onClick_AsyncListener
     , onClick_AsyncSendTest: onClick_AsyncSendTest
-    , onInput_Todo: \str -> V.apply (onInput_Todo str) s
+    , onInput_Todo: \a -> V.apply (onInput_Todo a) s
     , onClick_AddTodo: V.apply onClick_AddTodo s
     }
 
