@@ -46,9 +46,9 @@ foreign import over
   -> VueReactive (Record obj)
   -> Task Unit
 
--- | 映射一个vue响应式对象
--- | 映射函数获得的值是原始值而不是响应式值
-foreign import apply
+-- | 以副作用方式更新响应式对象
+-- | 函数获得的值是原始值而不是响应式值
+foreign import mapTask
   :: forall obj
    . (Record obj -> Task (Record obj))
   -> VueReactive (Record obj)

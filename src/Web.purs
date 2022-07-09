@@ -45,13 +45,13 @@ event :: Task (VueReactive Event)
 event = do
   s <- state
   V.mk
-    { onIncrease: V.apply onIncrease s
-    , onMakeZero: V.apply onMakeZero s
+    { onIncrease: V.mapTask onIncrease s
+    , onMakeZero: V.mapTask onMakeZero s
     , onSyncSendTest: onSyncSendTest
     , onAsyncListener: onAsyncListener
     , onAsyncSendTest: onAsyncSendTest
-    , onUpdateTodoText: \a -> V.apply (onUpdateTodoText a) s
-    , onAddTodo: V.apply onAddTodo s
+    , onUpdateTodoText: \a -> V.mapTask (onUpdateTodoText a) s
+    , onAddTodo: V.mapTask onAddTodo s
     }
 
 ----------------------

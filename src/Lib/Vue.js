@@ -28,7 +28,7 @@ exports.over = (key) => (_) => (_) => (value_f) => (obj) => () => {
     res(null)
   })
 }
-exports.apply = (f) => (obj) => () => {
+exports.mapTask = (f) => (obj) => () => {
   var { isProxy, toRaw } = require("vue")
   return new Promise((res, rej) => {
     var obj_clone = {}

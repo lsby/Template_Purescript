@@ -5,11 +5,11 @@ export type WebState = {
   toDoList: Array<"PureType_ToDoItem">
 };
 export type WebEvent = {
-  onClick_AddTodo: () => Promise<void>,
-  onClick_AsyncListener: () => Promise<void>,
-  onClick_AsyncSendTest: () => Promise<void>,
-  onClick_Increase: () => Promise<void>,
-  onClick_MakeZero: () => Promise<void>,
-  onClick_SyncSendTest: () => Promise<void>,
-  onInput_Todo: (a: "PureType_ToDoItem") => () => Promise<void>
+  onAddTodo: () => Promise<void>,
+  onAsyncListener: () => Promise<void>,
+  onAsyncSendTest: () => Promise<void>,
+  onIncrease: () => Promise<void>,
+  onMakeZero: () => Promise<void>,
+  onSyncSendTest: () => Promise<void>,
+  onUpdateTodoText: (a: "PureType_ToDoItem") => () => Promise<void>
 };
