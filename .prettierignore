@@ -3,6 +3,7 @@
 /output
 /src/Page/Types.ts
 /dist
-/tools/DB/*.js
+/src/Lib/DB.js
+/tools/db/*.js
 /tools/types/Database.ts
 /tools/types/Database.js
