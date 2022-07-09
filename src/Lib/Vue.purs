@@ -11,14 +11,14 @@ import Type.Proxy (Proxy)
 newtype VueReactive a = VueReactive a
 
 -- | 创建一个vue响应式对象
-foreign import mk
+foreign import mkVueData
   :: forall obj
    . Record obj
   -> Task (VueReactive (Record obj))
 
 -- | 获得一个vue响应式对象的值
 -- | 获得的是原始值而不是响应式值
-foreign import get
+foreign import getVueData
   :: forall key value tail obj
    . IsSymbol key
   => Cons key value tail obj
@@ -27,7 +27,7 @@ foreign import get
   -> Task value
 
 -- | 设置一个vue响应式对象的值
-foreign import set
+foreign import setVueData
   :: forall key value tail obj
    . IsSymbol key
   => Cons key value tail obj
@@ -37,7 +37,7 @@ foreign import set
   -> Task Unit
 
 -- | 修改一个vue响应式对象的值
-foreign import over
+foreign import overVueData
   :: forall key value tail obj
    . IsSymbol key
   => Cons key value tail obj
@@ -48,7 +48,7 @@ foreign import over
 
 -- | 以副作用方式更新响应式对象
 -- | 函数获得的值是原始值而不是响应式值
-foreign import mapTask
+foreign import mapTaskVueData
   :: forall obj
    . (Record obj -> Task (Record obj))
   -> VueReactive (Record obj)

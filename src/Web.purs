@@ -7,8 +7,7 @@ import Data.Either (Either(..))
 import Hby.Electron.IPCRenderer (on, send, sendSync)
 import Hby.Task (Task)
 import Hby.Task as T
-import Lib.Vue (VueReactive)
-import Lib.Vue as V
+import Lib.Vue (VueReactive, mapTaskVueData, mkVueData)
 import Model.Counter (Counter, addCounter, emptyCounter)
 import Model.ToDoList (ToDoItem, ToDoList, addToDoItem, emptyToDoItem, emptyToDoList)
 
@@ -22,7 +21,7 @@ type State =
   }
 
 state :: Task (VueReactive State)
-state = V.mk
+state = mkVueData
   { n: emptyCounter
   , hello: "hello, world!"
   , inputTodo: emptyToDoItem
@@ -44,14 +43,14 @@ type Event =
 event :: Task (VueReactive Event)
 event = do
   s <- state
-  V.mk
-    { onIncrease: V.mapTask onIncrease s
-    , onMakeZero: V.mapTask onMakeZero s
+  mkVueData
+    { onIncrease: mapTaskVueData onIncrease s
+    , onMakeZero: mapTaskVueData onMakeZero s
     , onSyncSendTest: onSyncSendTest
     , onAsyncListener: onAsyncListener
     , onAsyncSendTest: onAsyncSendTest
-    , onUpdateTodoText: \a -> V.mapTask (onUpdateTodoText a) s
-    , onAddTodo: V.mapTask onAddTodo s
+    , onUpdateTodoText: \a -> mapTaskVueData (onUpdateTodoText a) s
+    , onAddTodo: mapTaskVueData onAddTodo s
     }
 
 ----------------------

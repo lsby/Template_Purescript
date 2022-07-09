@@ -1,11 +1,11 @@
-exports.mk = (obj) => () => {
+exports.mkVueData = (obj) => () => {
   var { reactive } = require("vue")
   return new Promise((res, rej) => {
     var r = reactive(obj)
     res(r)
   })
 }
-exports.get = (key) => (_) => (_) => (obj) => () => {
+exports.getVueData = (key) => (_) => (_) => (obj) => () => {
   var { isProxy, toRaw } = require("vue")
   return new Promise((res, rej) => {
     var _v = obj[key.reflectSymbol()]
@@ -13,13 +13,13 @@ exports.get = (key) => (_) => (_) => (obj) => () => {
     res(v)
   })
 }
-exports.set = (key) => (_) => (_) => (value) => (obj) => () => {
+exports.setVueData = (key) => (_) => (_) => (value) => (obj) => () => {
   return new Promise((res, rej) => {
     obj[key.reflectSymbol()] = value
     res(null)
   })
 }
-exports.over = (key) => (_) => (_) => (value_f) => (obj) => () => {
+exports.overVueData = (key) => (_) => (_) => (value_f) => (obj) => () => {
   var { isProxy, toRaw } = require("vue")
   return new Promise((res, rej) => {
     var _v = obj[key.reflectSymbol()]
@@ -28,7 +28,7 @@ exports.over = (key) => (_) => (_) => (value_f) => (obj) => () => {
     res(null)
   })
 }
-exports.mapTask = (f) => (obj) => () => {
+exports.mapTaskVueData = (f) => (obj) => () => {
   var { isProxy, toRaw } = require("vue")
   return new Promise((res, rej) => {
     var obj_clone = {}
