@@ -1,45 +1,39 @@
 module Model.ToDoList
   ( ToDoList
   , ToDoItem
+  , mkToDoItem
   , emptyToDoList
-  , emptyToDoItem
   , addToDoItem
+  , toDoItemToString
+  , toDoListToArray
   ) where
-
-----------------------
 
 import Prelude
 
 import Data.Array (cons)
-import HasJSRep (class HasJSRep)
-import Lib.Lib (genPureArrayType, genPureType)
-import OhYes (class HasTSRep)
 
-----------------------
 -- | todo项
 newtype ToDoItem = ToDoItem String
 
-instance HasJSRep ToDoItem
-instance HasTSRep ToDoItem where
-  toTSRep _ = genPureType "ToDoItem"
-
-----------------------
 -- | todo列表
 newtype ToDoList = ToDoList (Array ToDoItem)
 
-instance HasJSRep ToDoList
-instance HasTSRep ToDoList where
-  toTSRep _ = genPureArrayType "ToDoItem"
+-- | 创建todo项
+mkToDoItem :: String -> ToDoItem
+mkToDoItem = ToDoItem
 
-----------------------
 -- | 空待办列表
 emptyToDoList :: ToDoList
 emptyToDoList = ToDoList []
 
--- | 空待办项
-emptyToDoItem :: ToDoItem
-emptyToDoItem = ToDoItem ""
-
 -- | 增加待办事项
 addToDoItem :: ToDoItem -> ToDoList -> ToDoList
 addToDoItem item (ToDoList arr) = ToDoList $ cons item arr
+
+-- 待办项转字符串
+toDoItemToString :: ToDoItem -> String
+toDoItemToString (ToDoItem item) = item
+
+-- | 待办列表转数组
+toDoListToArray :: ToDoList -> Array String
+toDoListToArray (ToDoList list) = map toDoItemToString list

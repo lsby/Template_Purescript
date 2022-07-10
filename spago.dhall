@@ -18,7 +18,6 @@ to generate this file without the comments in this block.
   , "effect"
   , "either"
   , "foldable-traversable"
-  , "has-js-rep"
   , "hby-electron"
   , "hby-express"
   , "hby-task"
@@ -32,6 +31,7 @@ to generate this file without the comments in this block.
   , "ohyes"
   , "prelude"
   , "prettier"
+  , "refs"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]

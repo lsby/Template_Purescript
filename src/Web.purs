@@ -4,71 +4,115 @@ import Prelude
 
 import Data.Argonaut as A
 import Data.Either (Either(..))
+import Effect.Class (liftEffect)
+import Effect.Ref (Ref)
+import Effect.Ref as Ref
 import Hby.Electron.IPCRenderer (on, send, sendSync)
 import Hby.Task (Task)
 import Hby.Task as T
-import Lib.Vue (VueReactive, mapTaskVueData, mkVueData)
-import Model.Counter (Counter, addCounter, emptyCounter)
-import Model.ToDoList (ToDoItem, ToDoList, addToDoItem, emptyToDoItem, emptyToDoList)
+import Lib.Vue (VueReactive, mkVueData, setAllVueData)
+import Model.Counter (Counter, addCounter, emptyCounter, getCounterNum)
+import Model.ToDoList (ToDoList, addToDoItem, emptyToDoList, mkToDoItem, toDoListToArray)
 
 ----------------------
--- | 前端状态
-type State =
-  { n :: Counter
+-- | 包装事件函数
+wrapEvent :: (ProcState -> Task ProcState) -> VueReactive State -> Ref ProcState -> Task Unit
+wrapEvent f s ref = do
+  p <- liftEffect $ Ref.read ref
+  p' <- f p
+  liftEffect $ Ref.write p' ref
+  setAllVueData (procStateToState p') s
+
+-- | 入口
+main :: Task { event :: Event, state :: VueReactive State }
+main = do
+  ref <- liftEffect $ Ref.new procState
+  ps <- liftEffect $ Ref.read ref
+  s <- mkVueData (procStateToState ps)
+  e <- pure (event s ref)
+  pure { state: s, event: e }
+
+----------------------
+-- | 程序状态类型
+type ProcState =
+  { counter :: Counter
   , hello :: String
-  , inputTodo :: ToDoItem
+  , inputTodo :: String
   , toDoList :: ToDoList
   }
 
-state :: Task (VueReactive State)
-state = mkVueData
-  { n: emptyCounter
-  , hello: "hello, world!"
-  , inputTodo: emptyToDoItem
+-- | 程序状态
+procState :: ProcState
+procState =
+  { hello: "hello, world!"
+  , counter: emptyCounter
+  , inputTodo: ""
   , toDoList: emptyToDoList
   }
 
 ----------------------
--- | 前端事件
+-- | 前端状态类型
+type State =
+  { hello :: String
+  , n :: Int
+  , inputTodo :: String
+  , toDoList :: Array String
+  }
+
+-- | 程序状态转前端状态
+procStateToState :: ProcState -> State
+procStateToState p =
+  { hello: p.hello
+  , n: getCounterNum p.counter
+  , inputTodo: p.inputTodo
+  , toDoList: toDoListToArray p.toDoList
+  }
+
+----------------------
+-- | 前端事件类型
 type Event =
-  { onIncrease :: Task Unit
-  , onMakeZero :: Task Unit
-  , onSyncSendTest :: Task Unit
+  { onSyncSendTest :: Task Unit
   , onAsyncListener :: Task Unit
   , onAsyncSendTest :: Task Unit
-  , onUpdateTodoText :: ToDoItem -> Task Unit
+  , onIncrease :: Task Unit
+  , onMakeZero :: Task Unit
+  , onUpdateTodoText :: String -> Task Unit
   , onAddTodo :: Task Unit
   }
 
-event :: Task (VueReactive Event)
-event = do
-  s <- state
-  mkVueData
-    { onIncrease: mapTaskVueData onIncrease s
-    , onMakeZero: mapTaskVueData onMakeZero s
-    , onSyncSendTest: onSyncSendTest
-    , onAsyncListener: onAsyncListener
-    , onAsyncSendTest: onAsyncSendTest
-    , onUpdateTodoText: \a -> mapTaskVueData (onUpdateTodoText a) s
-    , onAddTodo: mapTaskVueData onAddTodo s
-    }
+-- | 前端事件
+event :: VueReactive State -> Ref ProcState -> Event
+event s ref =
+  { onSyncSendTest: onSyncSendTest
+  , onAsyncListener: onAsyncListener
+  , onAsyncSendTest: onAsyncSendTest
+  , onIncrease: wrapEvent onIncrease s ref
+  , onMakeZero: wrapEvent onMakeZero s ref
+  , onUpdateTodoText: \a -> wrapEvent (onUpdateTodoText a) s ref
+  , onAddTodo: wrapEvent onAddTodo s ref
+  }
 
 ----------------------
 -- | 当点击添加待办项
-onAddTodo :: State -> Task State
-onAddTodo s = pure $ s { toDoList = addToDoItem s.inputTodo s.toDoList, inputTodo = emptyToDoItem }
+onAddTodo :: ProcState -> Task ProcState
+onAddTodo s
+  | s.inputTodo == "" = pure $ s
+  | otherwise = pure $ s
+      { toDoList = addToDoItem (mkToDoItem s.inputTodo) s.toDoList
+      , inputTodo = ""
+      }
 
 -- | 当输入待办项
-onUpdateTodoText :: ToDoItem -> State -> Task State
+onUpdateTodoText :: String -> ProcState -> Task ProcState
 onUpdateTodoText str s = pure $ s { inputTodo = str }
 
 -- | 当点击增加按钮
-onIncrease :: State -> Task State
-onIncrease s = pure $ s { n = addCounter 1 s.n }
+onIncrease :: ProcState -> Task ProcState
+onIncrease s = pure $ s { counter = addCounter 1 s.counter }
 
 -- | 当点击归零按钮
-onMakeZero :: State -> Task State
-onMakeZero s = pure $ s { n = emptyCounter }
+onMakeZero :: ProcState -> Task ProcState
+onMakeZero s = pure $ s { counter = emptyCounter }
 
 -- | 当点击同步测试按钮
 onSyncSendTest :: Task Unit

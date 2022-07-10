@@ -53,3 +53,7 @@ foreign import mapTaskVueData
    . (Record obj -> Task (Record obj))
   -> VueReactive (Record obj)
   -> Task Unit
+
+-- | 重新设置响应式对象的值
+setAllVueData :: forall obj. Record obj -> VueReactive (Record obj) -> Task Unit
+setAllVueData obj vd = mapTaskVueData (\_ -> pure obj) vd
