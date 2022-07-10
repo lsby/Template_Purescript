@@ -17,7 +17,7 @@ import Hby.Electron.IpcMainEvent (reply, setReturnValue)
 import Hby.Electron.WebContents (openDevTools)
 import Hby.Task (Task, runTask_)
 import Hby.Task as T
-import Lib.Lib (initEnv)
+import Lib.InitEnv (initEnv)
 import Node.Globals (__dirname)
 import Node.Path (resolve)
 import Node.Platform (toString)
