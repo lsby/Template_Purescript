@@ -5,9 +5,11 @@ module Model.Counter
   ) where
 
 ----------------------
+
 import Prelude
 
 import HasJSRep (class HasJSRep)
+import Lib.Lib (genPureType)
 import OhYes (class HasTSRep)
 
 ----------------------
@@ -16,7 +18,7 @@ newtype Counter = Counter Int
 
 instance HasJSRep Counter
 instance HasTSRep Counter where
-  toTSRep _ = "'PureType_Counter'"
+  toTSRep _ = genPureType "Counter"
 
 ----------------------
 -- | 空计数器
