@@ -82,14 +82,14 @@ type Event =
 
 -- | 前端事件
 event :: VueReactive State -> Ref ProcState -> Event
-event s ref =
+event s p =
   { onSyncSendTest: onSyncSendTest
   , onAsyncListener: onAsyncListener
   , onAsyncSendTest: onAsyncSendTest
-  , onIncrease: wrapEvent onIncrease s ref
-  , onMakeZero: wrapEvent onMakeZero s ref
-  , onUpdateTodoText: \a -> wrapEvent (onUpdateTodoText a) s ref
-  , onAddTodo: wrapEvent onAddTodo s ref
+  , onIncrease: wrapEvent onIncrease s p
+  , onMakeZero: wrapEvent onMakeZero s p
+  , onUpdateTodoText: \a -> wrapEvent (onUpdateTodoText a) s p
+  , onAddTodo: wrapEvent onAddTodo s p
   }
 
 ----------------------
