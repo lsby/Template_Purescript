@@ -8,11 +8,11 @@
   <button @click="e.onAsyncSendTest()">测试electron异步事件_发送</button>
   <div>
     <label>请输入</label
-    ><input
-      type="text"
-      @input="(a) => e.onUpdateTodoText(a.target.value)()"
-      :value="s.inputTodo"
-    /><button @click="e.onAddTodo()">添加</button>
+    ><input type="text" @input="onInput" :value="s.inputTodo" /><button
+      @click="e.onAddTodo()"
+    >
+      添加
+    </button>
     <li v-for="(item, index) in s.toDoList" :key="index">{{ item }}</li>
   </div>
 </template>
@@ -26,7 +26,12 @@ export default {
     var { proxy } = getCurrentInstance() as any
     var s = proxy.state as WebState
     var e = proxy.event as WebEvent
-    return { s, e, w: window }
+    return {
+      s,
+      e,
+      w: window,
+      onInput: (a: any) => e.onUpdateTodoText(a.target.value)(),
+    }
   },
 }
 </script>
