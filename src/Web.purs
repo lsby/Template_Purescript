@@ -61,7 +61,7 @@ type State =
 
 -- | 程序状态转前端状态
 procStateToState :: ProcState -> State
-procStateToState p =
+procStateToState p = do
   { hello: p.hello
   , n: getCounterNum p.counter
   , inputTodo: p.inputTodo
