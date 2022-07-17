@@ -4,6 +4,5 @@
   "[purescript]": {
     "editor.defaultFormatter": "nwolverson.ide-purescript"
   },
-  "purescript.formatter": "purs-tidy",
-  "vetur.experimental.templateInterpolationService": true
+  "purescript.formatter": "purs-tidy"
 }
