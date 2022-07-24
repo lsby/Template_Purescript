@@ -11,12 +11,25 @@ module Model.ToDoList
 import Prelude
 
 import Data.Array (cons)
+import HasJSRep (class HasJSRep)
+import OhYes (class HasTSRep, toTSRep)
+import Type.Proxy (Proxy(..))
 
 -- | todo项
 newtype ToDoItem = ToDoItem String
 
+-- | 实现转换到ts类型
+instance HasJSRep ToDoItem
+instance HasTSRep ToDoItem where
+  toTSRep _ = "string"
+
 -- | todo列表
 newtype ToDoList = ToDoList (Array ToDoItem)
+
+-- | 实现转换到ts类型
+instance HasJSRep ToDoList
+instance HasTSRep ToDoList where
+  toTSRep _ = "Array<" <> toTSRep (Proxy :: Proxy ToDoItem) <> ">"
 
 -- | 创建todo项
 mkToDoItem :: String -> ToDoItem

@@ -1,6 +1,6 @@
 <template>
   <div>{{ s.hello }}</div>
-  <div>{{ s.n }}</div>
+  <div>{{ e.getCounterNum(s.counter) }}</div>
   <button @click="e.onIncrease()">增加</button>
   <button @click="e.onMakeZero()">归零</button>
   <button @click="e.onSyncSendTest()">测试electron同步事件</button>
