@@ -18,6 +18,7 @@ to generate this file without the comments in this block.
   , "effect"
   , "either"
   , "foldable-traversable"
+  , "has-js-rep"
   , "hby-electron"
   , "hby-express"
   , "hby-task"
