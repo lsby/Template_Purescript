@@ -12,7 +12,7 @@ import Hby.Task (Task)
 import Hby.Task as T
 import Lib.Vue (VueReactive, mkVueData, setAllVueData)
 import Model.Counter (Counter, addCounter, emptyCounter, getCounterNum)
-import Model.ToDoList (ToDoList, addToDoItem, emptyToDoList, mkToDoItem, toDoListToArray)
+import Model.ToDoList (ToDoList, addToDoItem, emptyToDoList, mkToDoItem)
 
 ----------------------
 -- | 包装事件函数
