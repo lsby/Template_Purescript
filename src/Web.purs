@@ -54,24 +54,27 @@ procState =
 -- | 前端状态类型
 type State =
   { hello :: String
+  , counter :: Counter
   , n :: Int
   , inputTodo :: String
-  , toDoList :: Array String
+  , toDoList :: ToDoList
   }
 
 -- | 程序状态转前端状态
 procStateToState :: ProcState -> State
 procStateToState p = do
   { hello: p.hello
+  , counter: p.counter
   , n: getCounterNum p.counter
   , inputTodo: p.inputTodo
-  , toDoList: toDoListToArray p.toDoList
+  , toDoList: p.toDoList
   }
 
 ----------------------
 -- | 前端事件类型
 type Event =
-  { onSyncSendTest :: Task Unit
+  { getCounterNum :: Counter -> Int
+  , onSyncSendTest :: Task Unit
   , onAsyncListener :: Task Unit
   , onAsyncSendTest :: Task Unit
   , onIncrease :: Task Unit
@@ -83,7 +86,8 @@ type Event =
 -- | 前端事件
 event :: VueReactive State -> Ref ProcState -> Event
 event s p =
-  { onSyncSendTest: onSyncSendTest
+  { getCounterNum: getCounterNum
+  , onSyncSendTest: onSyncSendTest
   , onAsyncListener: onAsyncListener
   , onAsyncSendTest: onAsyncSendTest
   , onIncrease: wrapEvent onIncrease s p

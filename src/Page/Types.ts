@@ -1,10 +1,12 @@
 export type WebState = {
+  counter: { __PURSTYPE__: "Model.Counter.Counter" },
   hello: string,
   inputTodo: string,
   n: number,
-  toDoList: string[]
+  toDoList: Array<string>
 };
 export type WebEvent = {
+  getCounterNum: (a: { __PURSTYPE__: "Model.Counter.Counter" }) => number,
   onAddTodo: () => Promise<void>,
   onAsyncListener: () => Promise<void>,
   onAsyncSendTest: () => Promise<void>,

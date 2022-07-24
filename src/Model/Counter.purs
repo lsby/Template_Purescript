@@ -7,8 +7,16 @@ module Model.Counter
 
 import Prelude
 
+import HasJSRep (class HasJSRep)
+import OhYes (class HasTSRep)
+
 -- | 计数器
 newtype Counter = Counter Int
+
+-- | 实现ts类型
+instance HasJSRep Counter
+instance HasTSRep Counter where
+  toTSRep _ = "{ __PURSTYPE__: 'Model.Counter.Counter' }"
 
 -- | 空计数器
 emptyCounter :: Counter
