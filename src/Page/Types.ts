@@ -1,11 +1,11 @@
 export type WebState = {
-  counter: { __PURETYPE__: "Counter" },
+  counter: "_PURETYPE_Counter_",
   hello: string,
   inputTodo: string,
   toDoList: Array<string>
 };
 export type WebEvent = {
-  getCounterNum: (a: { __PURETYPE__: "Counter" }) => number,
+  getCounterNum: (a: "_PURETYPE_Counter_") => number,
   onAddTodo: () => Promise<void>,
   onAsyncListener: () => Promise<void>,
   onAsyncSendTest: () => Promise<void>,
