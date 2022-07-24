@@ -16,7 +16,7 @@ newtype Counter = Counter Int
 -- | 实现转换到ts类型
 instance HasJSRep Counter
 instance HasTSRep Counter where
-  toTSRep _ = "'_PURETYPE_Counter_'"
+  toTSRep _ = "'Counter'"
 
 -- | 空计数器
 emptyCounter :: Counter
