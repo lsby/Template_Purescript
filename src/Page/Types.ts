@@ -1,11 +1,10 @@
 export type WebState = {
-  counter: "Counter",
   hello: string,
   inputTodo: string,
-  toDoList: Array<string>
+  n: number,
+  toDoList: string[]
 };
 export type WebEvent = {
-  getCounterNum: (a: "Counter") => number,
   onAddTodo: () => Promise<void>,
   onAsyncListener: () => Promise<void>,
   onAsyncSendTest: () => Promise<void>,
