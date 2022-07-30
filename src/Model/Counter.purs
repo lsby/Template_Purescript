@@ -1,23 +1,13 @@
-module Model.Counter
-  ( Counter
-  , addCounter
-  , emptyCounter
-  , getCounterNum
-  ) where
+module Model.Counter where
 
 import Prelude
 
-import HasJSRep (class HasJSRep)
-import Lib.Lib (warnPursType)
-import OhYes (class HasTSRep)
+import Data.Generic.Rep (class Generic)
 
 -- | 计数器
 newtype Counter = Counter Int
 
--- | 实现ts类型
-instance HasJSRep Counter
-instance HasTSRep Counter where
-  toTSRep _ = warnPursType "Model.Counter.Counter"
+derive instance Generic Counter _
 
 -- | 空计数器
 emptyCounter :: Counter

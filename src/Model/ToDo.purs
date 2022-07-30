@@ -1,35 +1,19 @@
-module Model.ToDoList
-  ( ToDoList
-  , ToDoItem
-  , mkToDoItem
-  , emptyToDoList
-  , addToDoItem
-  , toDoItemToString
-  , toDoListToArray
-  ) where
+module Model.ToDoList where
 
 import Prelude
 
 import Data.Array (cons)
-import HasJSRep (class HasJSRep)
-import OhYes (class HasTSRep, toTSRep)
-import Type.Proxy (Proxy(..))
+import Data.Generic.Rep (class Generic)
 
 -- | todo项
 newtype ToDoItem = ToDoItem String
 
--- | 实现ts类型
-instance HasJSRep ToDoItem
-instance HasTSRep ToDoItem where
-  toTSRep _ = "string"
+derive instance Generic ToDoItem _
 
 -- | todo列表
 newtype ToDoList = ToDoList (Array ToDoItem)
 
--- | 实现ts类型
-instance HasJSRep ToDoList
-instance HasTSRep ToDoList where
-  toTSRep _ = "Array<" <> toTSRep (Proxy :: Proxy ToDoItem) <> ">"
+derive instance Generic ToDoList _
 
 -- | 创建todo项
 mkToDoItem :: String -> ToDoItem
