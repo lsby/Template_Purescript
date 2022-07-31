@@ -10,7 +10,7 @@ import Foreign (Foreign, unsafeToForeign)
 import Hby.Electron.IPCRenderer (on, send, sendSync)
 import Hby.Task (Task)
 import Hby.Task as T
-import Lib.ValueToTsValue (valueToTsValue)
+import Lib.LinkTS (valueToTsValue)
 import Lib.Vue (VueReactive, setVueDateValue, unsafeWrapVueData, unwrapVueData)
 import Model.Counter (Counter, addCounter, emptyCounter)
 import Model.ToDoList (ToDoList, addToDoItem, emptyToDoList, mkToDoItem)
