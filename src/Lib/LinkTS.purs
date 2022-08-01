@@ -2,7 +2,7 @@ module Lib.LinkTS where
 
 import Prelude
 
-import Data.Generic.Rep (class Generic, Argument(..), Constructor(..), NoArguments, Product(..), Sum(..), from)
+import Data.Generic.Rep (class Generic, Argument(..), Constructor(..), Product(..), Sum(..), from)
 import Data.Symbol (class IsSymbol)
 import Foreign (Foreign, unsafeToForeign)
 import Prim.Row (class Cons, class Lacks)
@@ -57,8 +57,6 @@ else instance (GetRecordTsValue row rowList, RowToList row rowList) => GenTypeTo
   genToTsValue a = trForeignRecordTsValue $ getRecordTsValue a
 else instance (GenTypeToTsValue a b) => GenTypeToTsValue (Argument a) (b) where
   genToTsValue (Argument a) = genToTsValue a
-else instance (IsSymbol name) => GenTypeToTsValue (Constructor name NoArguments) String where
-  genToTsValue _ = reflectSymbol (Proxy :: Proxy name)
 else instance (GenTypeToTsValue a a', GenTypeToTsValue b b', IsSymbol name) => GenTypeToTsValue (Constructor name (Product a b)) (Array Foreign) where
   genToTsValue (Constructor a) = trForeignSumTsValue $ genToTsValue a
 else instance (GenTypeToTsValue a b, IsSymbol name) => GenTypeToTsValue (Constructor name a) (b) where
@@ -133,8 +131,6 @@ else instance (GenTypeProxyToTsType a, GenTypeProxyToTsType b) => GenTypeProxyTo
   genTypeProxyToTsType _ = genTypeProxyToTsType (Proxy :: Proxy a) <> ", " <> genTypeProxyToTsType (Proxy :: Proxy b)
 else instance (GenTypeProxyToTsType t) => GenTypeProxyToTsType (Argument t) where
   genTypeProxyToTsType _ = genTypeProxyToTsType (Proxy :: Proxy t)
-else instance (IsSymbol name) => GenTypeProxyToTsType (Constructor name NoArguments) where
-  genTypeProxyToTsType _ = "\"" <> reflectSymbol (Proxy :: Proxy name) <> "\""
 else instance (GenTypeProxyToTsType t) => GenTypeProxyToTsType (Constructor name t) where
   genTypeProxyToTsType _ = genTypeProxyToTsType (Proxy :: Proxy t)
 else instance (Generic a t, GenTypeProxyToTsType t) => GenTypeProxyToTsType (a) where
