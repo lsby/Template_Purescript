@@ -147,4 +147,3 @@ else instance (Generic a t, GenTypeProxyToTsType t) => GenTypeProxyToTsType (a) 
 -- | 需要实现 Generic 类型类
 valueTypeToTsType :: forall a b. GenTypeProxyToTsType a => Generic b a => String -> b -> String
 valueTypeToTsType name a = "export type " <> name <> " = " <> genTypeProxyToTsType (getValueTypeProxy (from a))
-
