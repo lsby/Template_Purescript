@@ -22,6 +22,7 @@ async function main() {
         { path: "/Demo", component: Demo },
         { path: "/CountTest", component: CountTest },
         { path: "/ElectronTest", component: ElectronTest },
+        { path: "/:catchAll(.*)", component: NotFound },
       ],
     })
   )
