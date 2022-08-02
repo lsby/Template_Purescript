@@ -87,6 +87,6 @@ instance (LinkTS a) => LinkTS (Task a) where
   toTSType _ = "() => Promise<" <> toTSType (Proxy :: Proxy a) <> ">"
 
 toTSTypeExp :: forall a. LinkTS a => String -> a -> String
-toTSTypeExp name _ = "type " <> name <> " = " <> toTSType (Proxy :: Proxy a)
+toTSTypeExp name _ = "export type " <> name <> " = " <> toTSType (Proxy :: Proxy a)
 
 foreign import trForeignRecordTsValue :: Foreign -> Foreign
