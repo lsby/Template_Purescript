@@ -1,7 +1,7 @@
 /.spago
 /.parcel-cache
 /output
-/src/Page/Types.ts
+/src/Page/Types/Types.ts
 /dist
 /src/Lib/DB.js
 /tools/db/*.js
