@@ -15,7 +15,7 @@
 
 <script lang="ts" setup>
 import { getCurrentInstance } from "vue"
-import { WebState, WebEvent } from "./Types"
+import { WebState, WebEvent } from "./Types/Types"
 
 var { proxy } = getCurrentInstance() as any
 var s = proxy.state as WebState

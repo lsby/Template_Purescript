@@ -2,12 +2,14 @@ module Model.Counter where
 
 import Prelude
 
-import Data.Generic.Rep (class Generic)
+import Lib.LinkTS (class LinkTS, toTSValue)
 
 -- | 计数器
 newtype Counter = Counter Int
 
-derive instance Generic Counter _
+instance LinkTS Counter where
+  toTSValue (Counter a) = toTSValue a
+  toTSType _ = "number"
 
 -- | 空计数器
 emptyCounter :: Counter

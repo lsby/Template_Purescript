@@ -24,7 +24,6 @@ to generate this file without the comments in this block.
   , "hby-task"
   , "integers"
   , "maybe"
-  , "newtype"
   , "node-buffer"
   , "node-fs"
   , "node-path"
@@ -33,6 +32,7 @@ to generate this file without the comments in this block.
   , "prelude"
   , "prettier"
   , "record"
+  , "strings"
   , "typelevel-prelude"
   , "unsafe-coerce"
   ]

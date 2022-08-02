@@ -3,17 +3,22 @@ module Model.ToDoList where
 import Prelude
 
 import Data.Array (cons)
-import Data.Generic.Rep (class Generic)
+import Lib.LinkTS (class LinkTS, toTSType, toTSValue)
+import Type.Proxy (Proxy(..))
 
 -- | todo项
 newtype ToDoItem = ToDoItem String
 
-derive instance Generic ToDoItem _
+instance LinkTS ToDoItem where
+  toTSValue (ToDoItem a) = toTSValue a
+  toTSType _ = "string"
 
 -- | todo列表
 newtype ToDoList = ToDoList (Array ToDoItem)
 
-derive instance Generic ToDoList _
+instance LinkTS ToDoList where
+  toTSValue (ToDoList a) = toTSValue a
+  toTSType _ = toTSType (Proxy :: Proxy (Array ToDoItem))
 
 -- | 创建todo项
 mkToDoItem :: String -> ToDoItem
